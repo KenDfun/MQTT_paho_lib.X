@@ -38,21 +38,21 @@ int MQTTStringFormat_connect(char* strbuf, int strbuflen, MQTTPacket_connectData
 {
 	int strindex = 0;
 
-	strindex = snprintf(strbuf, strbuflen,
+	strindex = sprintf(strbuf,
 			"CONNECT MQTT version %d, client id %.*s, clean session %d, keep alive %d",
 			(int)data->MQTTVersion, data->clientID.lenstring.len, data->clientID.lenstring.data,
 			(int)data->cleansession, data->keepAliveInterval);
 	if (data->willFlag)
-		strindex += snprintf(&strbuf[strindex], strbuflen - strindex,
+		strindex += sprintf(&strbuf[strindex],
 				", will QoS %d, will retain %d, will topic %.*s, will message %.*s",
 				data->will.qos, data->will.retained,
 				data->will.topicName.lenstring.len, data->will.topicName.lenstring.data,
 				data->will.message.lenstring.len, data->will.message.lenstring.data);
 	if (data->username.lenstring.data && data->username.lenstring.len > 0)
-		strindex += snprintf(&strbuf[strindex], strbuflen - strindex,
+		strindex += sprintf(&strbuf[strindex],
 				", user name %.*s", data->username.lenstring.len, data->username.lenstring.data);
 	if (data->password.lenstring.data && data->password.lenstring.len > 0)
-		strindex += snprintf(&strbuf[strindex], strbuflen - strindex,
+		strindex += sprintf(&strbuf[strindex],
 				", password %.*s", data->password.lenstring.len, data->password.lenstring.data);
 	return strindex;
 }
